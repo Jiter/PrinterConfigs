@@ -8,7 +8,6 @@ M140 S{material_bed_temperature_layer_0} ; set bed temp
 
 G28 X0 Y0  ;move X/Y to min endstops
 G28 Z0     ;move Z to min endstops
-G29
 
 M190 S{material_bed_temperature_layer_0} ; wait for bed temp
 M109 S{material_print_temperature_layer_0} ; wait for extruder temp
