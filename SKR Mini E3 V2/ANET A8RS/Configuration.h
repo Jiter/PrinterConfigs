@@ -546,9 +546,10 @@
   //#define DEFAULT_bedKi 1.41
   //#define DEFAULT_bedKd 1675.16
 
-  #define DEFAULT_bedKp 50.71
-  #define DEFAULT_bedKi 9.88
-  #define DEFAULT_bedKd 173.43
+  //ANET A8RS Heatbed with Glass
+  #define DEFAULT_bedKp 174.25
+  #define DEFAULT_bedKi 31.97
+  #define DEFAULT_bedKd 633.23
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
