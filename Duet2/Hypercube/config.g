@@ -22,12 +22,12 @@ M569 P2 S0                                         ; physical drive 2 goes backw
 M569 P3 S0                                         ; physical drive 3 goes backwards
 M569 P5 S0                                         ; physical drive 5 goes backwards
 M584 X0 Y1 Z2:3 E5                                 ; set drive mapping
-;M350 E128 I0                                       ; configure microstepping without interpolation
-M350 X16 Y16 Z16:16 E16 I1                          ; configure microstepping with interpolation
+;M350 E128 I0                                      ; configure microstepping without interpolation
+M350 X16 Y16 Z16:16 E16 I1                         ; configure microstepping with interpolation
 M92 X160.00 Y160.00 Z800.00 E401                   ; set steps per mm
-M566 X600.00 Y600.00 Z300.00 E600.00               ; set maximum instantaneous speed changes (mm/min)
-M203 X12000.00 Y12000.00 Z960.00 E60000.00         ; set maximum speeds (mm/min)
-M201 X500.00 Y500.00 Z200.00 E10000.00             ; set accelerations (mm/s^2)
+M566 X900.00 Y900.00 Z12.00 E2600.00               ; set maximum instantaneous speed changes (mm/min)
+M203 X12000.00 Y12000.00 Z2000.00 E3600.00         ; set maximum speeds (mm/min)
+M201 X1000.00 Y1000.00 Z500.00 E3000.00            ; set accelerations (mm/s^2)
 M906 X1000 Y1000 Z1000 E800 I30                    ; set motor currents (mA) and motor idle factor in per cent
 M84 S30                                            ; Set idle timeout
 
@@ -43,7 +43,7 @@ M574 Z1 S2                                         ; configure Z-probe endstop f
 ; Z-Probe
 M950 S0 C"duex.pwm5"                               ; create servo pin 0 for BLTouch
 M558 P9 C"^zprobe.in" H5 F300 T6000                ; set Z probe type to bltouch and the dive height + speeds
-G31 P500 X26 Y0 Z0.685                               ; set Z probe trigger value, offset and trigger height
+G31 P500 X26 Y0 Z4.02 							               ; set Z probe trigger value, offset and trigger height
 M557 X15:300 Y15:195 S20                           ; define mesh grid
 
 ; Heaters
@@ -56,6 +56,7 @@ M308 S1 P"duex.e2temp" Y"thermistor" T100000 B4725 C7.06e-8 ; configure sensor 1
 M950 H1 C"duex.e2heat" T1                          ; create nozzle heater output on duex.e2heat and map it to sensor 1
 M307 H1 B0 S0.95                                   ; disable bang-bang mode for heater  and set PWM limit
 M143 H1 S300                                       ; set temperature limit for heater 1 to 300C
+M308 S2 P"spi.cs2" Y"rtd-max31865" A"Chamber"      ; configure sensor 2 as pt100 on daughterboard channel 2
 
 ; Fans
 M950 F0 C"duex.fan4" Q500                          ; create fan 0 on pin duex.fan4 and set its frequency
@@ -69,7 +70,8 @@ G10 P0 X0 Y0 Z0                                    ; set tool 1 axis offsets
 G10 P0 R0 S0                                       ; set initial tool 1 active and standby temperatures to 0C
 
 ; Custom settings
-M81                                                ; turn off power supply
+M80                                                ; turn on power supply
+M591 D0 P1 C"e0_stop" S1						               ; enable Filament Runout sensor
 
 ; Miscellaneous
 M501                                               ; load saved parameters from non-volatile memory
