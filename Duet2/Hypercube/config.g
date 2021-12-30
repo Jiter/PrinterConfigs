@@ -43,7 +43,7 @@ M574 Z1 S2                                         ; configure Z-probe endstop f
 ; Z-Probe
 M950 S0 C"duex.pwm5"                               ; create servo pin 0 for BLTouch
 M558 P9 C"^zprobe.in" H5 F300 T6000                ; set Z probe type to bltouch and the dive height + speeds
-G31 P500 X26 Y0 Z4.02 							               ; set Z probe trigger value, offset and trigger height
+G31 P500 X26 Y0 Z3.97 							   ; set Z probe trigger value, offset and trigger height
 M557 X15:300 Y15:195 S20                           ; define mesh grid
 
 ; Heaters
@@ -57,6 +57,10 @@ M950 H1 C"duex.e2heat" T1                          ; create nozzle heater output
 M307 H1 B0 S0.95                                   ; disable bang-bang mode for heater  and set PWM limit
 M143 H1 S300                                       ; set temperature limit for heater 1 to 300C
 M308 S2 P"spi.cs2" Y"rtd-max31865" A"Chamber"      ; configure sensor 2 as pt100 on daughterboard channel 2
+M950 H2 C"duex.e3heat" T2                               ; create chamber heater output on e1heat and map it to sensor 2
+;M307 H2 B0 S1.00                                   ; disable bang-bang mode for the chamber heater and set PWM limit
+M141 H2                                            ; map chamber to heater 2
+M143 H2 S60                                        ; set temperature limit for heater 2 to 100C
 
 ; Fans
 M950 F0 C"duex.fan4" Q500                          ; create fan 0 on pin duex.fan4 and set its frequency
@@ -70,8 +74,7 @@ G10 P0 X0 Y0 Z0                                    ; set tool 1 axis offsets
 G10 P0 R0 S0                                       ; set initial tool 1 active and standby temperatures to 0C
 
 ; Custom settings
-M80                                                ; turn on power supply
-M591 D0 P1 C"e0_stop" S1						               ; enable Filament Runout sensor
+M591 D0 P1 C"e0_stop" S1						   ; enable Filament Runout sensor
 
 ; Miscellaneous
 M501                                               ; load saved parameters from non-volatile memory
